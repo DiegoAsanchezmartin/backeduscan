@@ -22,3 +22,5 @@ const InstitucionSchema = mongoose.Schema({
         default: Date.now()
     }
 });
+
+module.exports = mongoose.model('Institucion', InstitucionSchema);
