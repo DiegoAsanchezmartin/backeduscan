@@ -21,8 +21,11 @@ const corsOptions = {
   app.use(express.urlencoded({ extended: false })); // Para recibir datos de formularios
 
 // Conexión a la base de datos
-mongoose.connect('mongodb://localhost:27017/sistema-asistencia', {
-});
+const dbURI = 'mongodb+srv://diegosa1203:diego12@cluster0.yqvp3pt.mongodb.net/eduscan?retryWrites=true&w=majority';
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch((error) => console.error('Error al conectar a MongoDB:', error));
 
 // Integrar Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
