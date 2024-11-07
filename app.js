@@ -14,11 +14,11 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
-};
+  };
 
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+  app.use(cors(corsOptions));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false })); // Para recibir datos de formularios
 
 // Conexión a la base de datos
 mongoose.connect('mongodb://localhost:27017/sistema-asistencia', {
