@@ -49,7 +49,7 @@ class UsuarioService {
                 rol: usuario.rol
             };
 
-            return jwt.sign(payload, 'secretonotansecreto', { expiresIn: '1h' });
+            return jwt.sign(payload, 'secretonotansecreto');
         } catch (error) {
             throw new Error('Error al generar el token');
         }
