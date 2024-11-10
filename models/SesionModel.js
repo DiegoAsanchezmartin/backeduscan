@@ -7,15 +7,27 @@ const SesionSchema = mongoose.Schema({
     },
     descripcion: {
         type: String,
+    },
+    clase: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Clase',
         required: true
     },
     asistencia: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Estudiante',
+        estudiante: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Estudiante',
+            required: true
+        },
         tipoA: {
             type: String,
+            enum: ['Asistio', 'Falto', 'Tarde'],
             required: true
         }
+    }],
+    justificaciones: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Justificacion'
     }],
     estado: {
         type: Boolean,
@@ -24,6 +36,12 @@ const SesionSchema = mongoose.Schema({
     fechaCreacion: {
         type: Date,
         default: Date.now()
+    },
+    horadeInicio: {
+        type: Date
+    },
+    horaFin: {
+        type: Date
     }
 });
 

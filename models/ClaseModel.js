@@ -9,6 +9,15 @@ const ClaseSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    profesor: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true
+    },
+    estudiantes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Usuario'
+    }],
     estado: {
         type: Boolean,
         default: true

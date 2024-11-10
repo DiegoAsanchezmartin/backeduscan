@@ -5,21 +5,9 @@ const InstitucionSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    direccion: {
-        type: String,
-        required: true
-    },
-    telefono: {
-        type: String,
-        required: true
-    },
     estado: {
         type: Boolean,
         default: true
-    },
-    fechaCreacion: {
-        type: Date,
-        default: Date.now()
     }
 });
 

@@ -1,4 +1,4 @@
-const Institucion = require('../models/Institucion'); // Asegúrate de que la ruta es correcta
+const Institucion = require('../models/institucion'); 
 const BaseController = require('./BaseController');
 
 class InstitucionController extends BaseController {
