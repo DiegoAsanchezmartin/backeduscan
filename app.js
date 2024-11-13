@@ -690,18 +690,10 @@ const sesionController = new SesionController();
  *     Sesion:
  *       type: object
  *       required:
- *         - nombre
  *         - clase
  *         - asistencia
  *         - horadeInicio
- *         - horaFin
  *       properties:
- *         nombre:
- *           type: string
- *           description: Nombre de la sesión
- *         descripcion:
- *           type: string
- *           description: Descripción de la sesión
  *         clase:
  *           type: string
  *           description: ID de la clase a la que pertenece la sesión
@@ -733,13 +725,7 @@ const sesionController = new SesionController();
  *           type: string
  *           format: date-time
  *           description: Hora de inicio de la sesión
- *         horaFin:
- *           type: string
- *           format: date-time
- *           description: Hora de fin de la sesión
  *       example:
- *         nombre: "Matemáticas 101 - Sesión 1"
- *         descripcion: "Primera sesión introductoria de matemáticas"
  *         clase: "64d6f9f8570c3f0f6c2e3a18"
  *         asistencia:
  *           - estudiante: "64d6f9f8570c3f0f6c2e3a17"
@@ -749,8 +735,7 @@ const sesionController = new SesionController();
  *         justificaciones: ["64d6f9f8570c3f0f6c2e3a19"]
  *         estado: true
  *         fechaCreacion: "2024-11-08T10:30:00Z"
- *         horadeInicio: "2024-11-08T11:00:00Z" 
- *         horaFin: "2024-11-08T12:30:00Z"
+ *         horadeInicio: "2024-11-08T11:00:00Z"  
  */
 
 

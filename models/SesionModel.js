@@ -1,13 +1,7 @@
 const mongoose = require('mongoose');
 
 const SesionSchema = mongoose.Schema({
-    nombre: {
-        type: String,
-        required: true
-    },
-    descripcion: {
-        type: String,
-    },
+
     clase: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Clase',
@@ -38,9 +32,6 @@ const SesionSchema = mongoose.Schema({
         default: Date.now()
     },
     horadeInicio: {
-        type: Date
-    },
-    horaFin: {
         type: Date
     }
 });
