@@ -422,9 +422,9 @@ const claseController = new ClaseController();
  *         nombre:
  *           type: string
  *           description: Nombre de la clase
- *         descripcion:
+ *         turno:
  *           type: string
- *           description: Descripción de la clase
+ *           description: Turno de la clase
  *         profesor:
  *           type: string
  *           description: ID del profesor que imparte la clase
@@ -442,7 +442,7 @@ const claseController = new ClaseController();
  *           description: Fecha de creación de la clase
  *       example:
  *         nombre: "Matemáticas Avanzadas"
- *         descripcion: "Curso avanzado de matemáticas" 
+ *         descripcion: "Matutino" 
  *         profesor: "64d6f9f8570c3f0f6c2e3a17"
  *         estudiantes: ["64d6f9f8570c3f0f6c2e3a17", "64d6f9f8570c3f0f6c2e3a18"]
  *         estado: true
