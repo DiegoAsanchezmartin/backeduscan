@@ -645,6 +645,39 @@ app.put('/clasesagregar/:id', claseController.agregarEstudiante.bind(claseContro
  */
 app.get('/clasesestudiantes/:id', claseController.obtenerEstudiantes.bind(claseController));
 
+/**
+ * @swagger
+ * /clases/profesor/{id}:
+ *   get:
+ *     summary: Obtiene todas las clases asignadas a un profesor
+ *     tags: [Clases]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del profesor
+ *     responses:
+ *       200:
+ *         description: Lista de clases asignadas al profesor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   nombre:
+ *                     type: string
+ *                   turno:
+ *                     type: string
+ *       500:
+ *         description: Error al obtener las clases del profesor
+ */
+app.get('/clases/profesor/:id', claseController.obtenerClasesPorProfesor.bind(claseController));
 
 // rutas para los sesiones
 const SesionController = require('./controllers/SesionController');

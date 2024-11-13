@@ -39,6 +39,19 @@ class ClaseController extends BaseController {
         }
     }
 
+    // Método que recibe el ID de usuario con rol de profesor y devuelve las clases que tiene asignadas ese profesor
+    async obtenerClasesPorProfesor(req, res) {
+        const idProfesor = req.params.id;
+
+        try {
+            const clases = await Clase.find({ profesor: idProfesor }).select('id nombre turno');
+            res.json(clases);
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener las clases del profesor' });
+        }
+    }
+
+
 }
 
 module.exports = ClaseController;
