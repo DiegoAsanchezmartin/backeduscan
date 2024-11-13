@@ -433,9 +433,9 @@ const claseController = new ClaseController();
  *           items:
  *             type: string
  *           description: Lista de IDs de estudiantes inscritos en la clase
- *         estado:
+ *         estado: 
  *           type: boolean
- *           description: Estado de la clase (activa/inactiva)
+ *           description: Estado de la clase (activa/inactiva) 
  *         fechaCreacion:
  *           type: string
  *           format: date
