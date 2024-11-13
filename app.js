@@ -442,12 +442,12 @@ const claseController = new ClaseController();
  *           description: Fecha de creación de la clase
  *       example:
  *         nombre: "Matemáticas Avanzadas"
- *         descripcion: "Matutino" 
+ *         turno: "Matutino" 
  *         profesor: "64d6f9f8570c3f0f6c2e3a17"
  *         estudiantes: ["64d6f9f8570c3f0f6c2e3a17", "64d6f9f8570c3f0f6c2e3a18"]
  *         estado: true
  *         fechaCreacion: "2023-09-12T10:00:00.000Z"
- */
+ */ 
 
 /**
  * @swagger
