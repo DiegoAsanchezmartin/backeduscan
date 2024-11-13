@@ -88,6 +88,139 @@ app.post('/usuarios/register', usuarioController.registrar.bind(usuarioControlle
  */
 app.post('/usuarios/login', usuarioController.iniciarSesion.bind(usuarioController));
 
+// Rutas para usuarios
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Usuario:
+ *       type: object
+ *       properties:
+ *         nombre:
+ *           type: string
+ *           example: "Juan"
+ *         apellido:
+ *           type: string
+ *           example: "Pérez"
+ *         correo:
+ *           type: string
+ *           example: "juan.perez@example.com"
+ *         contrasena:
+ *           type: string
+ *           example: "password123"
+ *         rol:
+ *           type: string
+ *           enum: [Estudiante, Profesor]
+ *           example: "Estudiante"
+ *         fechaRegistro:
+ *           type: string
+ *           format: date-time
+ *           example: "2023-11-06T14:32:00Z"
+ */
+
+/**
+ * @swagger
+ * /usuarios:
+ *   get:
+ *     summary: Obtiene todos los usuarios
+ *     tags: [Usuarios]
+ *     responses:
+ *       200:
+ *         description: Lista de usuarios
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Usuario'
+ *       500:
+ *         description: Error al obtener los usuarios
+ */
+app.get('/usuarios', usuarioController.obtenerTodos.bind(usuarioController));
+
+/**
+ * @swagger
+ * /usuarios/{id}:
+ *   get:
+ *     summary: Obtiene un usuario por ID
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario obtenido con éxito
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Usuario'
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error al obtener el usuario
+ */
+app.get('/usuarios/:id', usuarioController.obtenerPorId.bind(usuarioController));
+
+/**
+ * @swagger
+ * /usuarios/{id}:
+ *   put:
+ *     summary: Actualiza un usuario por ID
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del usuario
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Usuario'
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado con éxito
+ *       400:
+ *         description: Error al actualizar el usuario
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error al actualizar el usuario
+ */
+app.put('/usuarios/:id', usuarioController.actualizar.bind(usuarioController));
+
+/**
+ * @swagger
+ * /usuarios/{id}:
+ *   delete:
+ *     summary: Elimina un usuario por ID
+ *     tags: [Usuarios]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado con éxito
+ *       400:
+ *         description: Error al eliminar el usuario
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error al eliminar el usuario
+ */
+app.delete('/usuarios/:id', usuarioController.eliminar.bind(usuarioController));
 
 
 
