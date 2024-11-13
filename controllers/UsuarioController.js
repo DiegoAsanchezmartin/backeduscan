@@ -1,6 +1,13 @@
 const UsuarioService = require('../services/UsuarioService');
+const BaseController = require('./BaseController');
+const Usuario = require('../models/UsuarioModel');
 
-class UsuarioController {
+class UsuarioController extends BaseController {
+
+    constructor() {
+        super(Usuario);
+    }
+    
      async registrar(req, res) {
         try {
             const usuario = req.body;
