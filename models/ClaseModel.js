@@ -3,11 +3,9 @@ const mongoose = require('mongoose');
 const ClaseSchema = mongoose.Schema({
     nombre: {
         type: String,
-        required: true
     },
-    descripcion: {
+    turno: {
         type: String,
-        required: true
     },
     profesor: {
         type: mongoose.Schema.Types.ObjectId,
