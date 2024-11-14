@@ -15,7 +15,7 @@ async crear(req, res) {
 
 
 async obtenerTodos(req, res) {
-    const { pagina = 1, tamanoPagina = 10, search = '' } = req.query; // Parámetros de paginación y búsqueda
+    const { pagina = 1, tamanoPagina = 1000, search = '' } = req.query; // Parámetros de paginación y búsqueda
 
     try {
         const skip = (pagina - 1) * tamanoPagina;
