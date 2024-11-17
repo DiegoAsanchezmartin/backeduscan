@@ -26,3 +26,6 @@ Thumbs.db
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+#specify the files you want to ignore
+swagger.js

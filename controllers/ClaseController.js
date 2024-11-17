@@ -51,6 +51,18 @@ class ClaseController extends BaseController {
         }
     }
 
+    // Método que recibe el ID de usuario con rol de estudiante y devuelve las clases a las que está inscrito ese estudiante
+    async obtenerClasesPorEstudiante(req, res) {
+        const idEstudiante = req.params.id;
+
+        try {
+            const clases = await Clase.find({ estudiantes: idEstudiante }).select('id nombre turno');
+            res.json(clases);
+        } catch (error) {
+            res.status(500).json({ error: 'Error al obtener las clases del estudiante' });
+        }
+    }
+
 
 }
 

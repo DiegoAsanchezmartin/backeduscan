@@ -679,6 +679,40 @@ app.get('/clasesestudiantes/:id', claseController.obtenerEstudiantes.bind(claseC
  */
 app.get('/clases/profesor/:id', claseController.obtenerClasesPorProfesor.bind(claseController));
 
+/**
+ * @swagger
+ * /clases/estudiante/{id}:
+ *   get:
+ *     summary: Obtiene todas las clases a las que está inscrito un estudiante
+ *     tags: [Clases]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del estudiante
+ *     responses:
+ *       200:
+ *         description: Lista de clases inscritas por el estudiante
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   nombre:
+ *                     type: string
+ *                   turno:
+ *                     type: string
+ *       500:
+ *         description: Error al obtener las clases del estudiante
+ */
+app.get('/clases/estudiante/:id', claseController.obtenerClasesPorEstudiante.bind(claseController));
+
 // rutas para los sesiones
 const SesionController = require('./controllers/SesionController');
 const sesionController = new SesionController();
@@ -1118,15 +1152,30 @@ const foroController = new ForoController();
  * @swagger
  * components:
  *   schemas:
+ *     Vista:
+ *       type: object
+ *       properties:
+ *         usuario:
+ *           type: string
+ *           description: ID del usuario que vio el foro
+ *         fecha:
+ *           type: string
+ *           format: date-time
+ *           description: Fecha en que el usuario vio el foro
+ *
  *     Foro:
  *       type: object
  *       required:
  *         - profesor
+ *         - clase
  *         - titulo
  *       properties:
  *         profesor:
  *           type: string
  *           description: ID del profesor que creó el foro
+ *         clase:
+ *           type: string
+ *           description: ID de la clase a la que pertenece el foro
  *         titulo:
  *           type: string
  *           description: Título del foro
@@ -1140,23 +1189,16 @@ const foroController = new ForoController();
  *         vistas:
  *           type: array
  *           items:
- *             type: object
- *             properties:
- *               alumno:
- *                 type: string
- *                 description: ID del alumno que vio el foro
- *               fechavista:
- *                 type: string
- *                 format: date-time
- *                 description: Fecha en que el alumno vio el foro
+ *             $ref: '#/components/schemas/Vista'
  *       example:
  *         profesor: "64d6f9f8570c3f0f6c2e3a18"
+ *         clase: "64d6f9f8570c3f0f6c2e3a20"
  *         titulo: "Foro sobre nuevas estrategias de enseñanza"
  *         descripcion: "Este foro discute las nuevas metodologías aplicadas en la enseñanza."
  *         fechacreacion: "2024-11-08T10:30:00Z"
  *         vistas: 
- *           - alumno: "64d6f9f8570c3f0f6c2e3a19"
- *             fechavista: "2024-11-08T12:00:00Z"
+ *           - usuario: "64d6f9f8570c3f0f6c2e3a19"
+ *             fecha: "2024-11-08T12:00:00Z"
  */
 
 /**
@@ -1278,7 +1320,96 @@ app.put('/foros/:id', foroController.actualizar.bind(foroController));
  */
 app.delete('/foros/:id', foroController.eliminar.bind(foroController));
 
+/**
+ * @swagger
+ * /foros/vista/{foroId}:
+ *   post:
+ *     summary: Agrega una vista al foro
+ *     tags: [Foros]
+ *     parameters:
+ *       - in: path
+ *         name: foroId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del foro
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               usuarioId:
+ *                 type: string
+ *                 description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Vista agregada con éxito
+ *       400:
+ *         description: Vista ya agregada
+ *       404:
+ *         description: Foro no encontrado
+ *       500:
+ *         description: Error al agregar vista
+ */
+app.post('/foros/vista/:foroId', foroController.addVista.bind(foroController));
+
+/**
+ * @swagger
+ * /foros/estudiante/{estudianteId}:
+ *   get:
+ *     summary: Obtiene todos los foros a los que está inscrito un estudiante
+ *     tags: [Foros]
+ *     parameters:
+ *       - in: path
+ *         name: estudianteId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del estudiante
+ *     responses:
+ *       200:
+ *         description: Lista de foros a los que está inscrito el estudiante
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Foro'
+ *       500:
+ *         description: Error al obtener los foros del estudiante
+ */
+app.get('/foros/estudiante/:estudianteId', foroController.obtenerForosPorEstudiante.bind(foroController));
+
+/**
+ * @swagger
+ * /foros/profesor/{profesorId}:
+ *   get:
+ *     summary: Obtiene todos los foros creados por un profesor
+ *     tags: [Foros]
+ *     parameters:
+ *       - in: path
+ *         name: profesorId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del profesor
+ *     responses:
+ *       200:
+ *         description: Lista de foros creados por el profesor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Foro'
+ *       500:
+ *         description: Error al obtener los foros del profesor
+ */
+app.get('/foros/profesor/:profesorId', foroController.obtenerForosPorProfesor.bind(foroController));
+
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
+}); 
