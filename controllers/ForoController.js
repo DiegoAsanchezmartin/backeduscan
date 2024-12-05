@@ -65,7 +65,17 @@ class ForoController extends BaseController {
                     path: 'vistas.usuario',
                     select: 'nombre'
                 });
-            res.status(200).json(foros);
+
+            // Modificar la estructura de la respuesta para solo incluir el nombre de los estudiantes
+            const forosConNombres = foros.map(foro => ({
+                ...foro.toObject(),
+                vistas: foro.vistas.map(vista => ({
+                    nombre: vista.usuario.nombre,
+                    fecha: vista.fecha
+                }))
+            }));
+
+            res.status(200).json(forosConNombres);
         } catch (error) {
             console.error('Error al obtener los foros del profesor:', error);
             res.status(500).json({ message: 'Error al obtener los foros del profesor', error: error.message });

@@ -11,8 +11,8 @@ const options = {
         },
         servers: [
             {
-                // url: 'http://localhost:4000',
-                url:'http://187.157.236.139:4000'
+                url: 'http://localhost:4000',
+                // url:'http://187.157.236.139:4000'
             },
         ],
     },
