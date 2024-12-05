@@ -33,7 +33,7 @@ class ForoController extends BaseController {
         }
     }
 
-    // Método para obtener los foros a los que un estudiante está inscrito
+    // Método para obtener los foros a los que un estudiante está inscrito y agregar el nombre de los estudiantes que han visto cada foro
     async obtenerForosPorEstudiante(req, res) {
         const { estudianteId } = req.params;
 
@@ -42,14 +42,28 @@ class ForoController extends BaseController {
             const clases = await Clase.find({ estudiantes: estudianteId }).select('_id');
             const claseIds = clases.map(clase => clase._id);
 
-        // Encontrar todos los foros asociados a esas clases sin incluir información adicional
-        const foros = await Foro.find({ clase: { $in: claseIds } })
-            .select('titulo descripcion fechacreacion vistas'); // Seleccionar solo los campos necesarios del foro
+            // Encontrar todos los foros asociados a esas clases
+            const foros = await Foro.find({ clase: { $in: claseIds } })
+                .select('titulo descripcion fechacreacion vistas')
+                .populate({
+                    path: 'vistas.usuario',
+                    select: 'nombre'
+                });
 
-        res.status(200).json(foros);
+            // Modificar la estructura de la respuesta para incluir el nombre de los estudiantes y mantener el ID de las vistas
+            const forosConNombres = foros.map(foro => ({
+                ...foro.toObject(),
+                vistas: foro.vistas.map(vista => ({
+                    _id: vista._id,
+                    usuario: vista.usuario.nombre,
+                    fecha: vista.fecha
+                }))
+            }));
+
+            res.status(200).json(forosConNombres);
         } catch (error) {
-        console.error('Error al obtener los foros del estudiante:', error);
-        res.status(500).json({ message: 'Error al obtener los foros del estudiante', error: error.message });
+            console.error('Error al obtener los foros del estudiante:', error);
+            res.status(500).json({ message: 'Error al obtener los foros del estudiante', error: error.message });
         }
     }
 
