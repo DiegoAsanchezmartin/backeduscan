@@ -54,18 +54,23 @@ class ForoController extends BaseController {
     }
 
         
-        // Método para obtener los foros de un profesor
-        async obtenerForosPorProfesor(req, res) {
-            const { profesorId } = req.params;
-    
-            try {
-                const foros = await Foro.find({ profesor: profesorId }).populate('clase');
-                res.status(200).json(foros);
-            } catch (error) {
-                console.error('Error al obtener los foros del profesor:', error);
-                res.status(500).json({ message: 'Error al obtener los foros del profesor', error: error.message });
-            }
+    // Método para obtener los foros de un profesor y agregar el nombre de los estudiantes que han visto cada foro
+    async obtenerForosPorProfesor(req, res) {
+        const { profesorId } = req.params;
+
+        try {
+            const foros = await Foro.find({ profesor: profesorId })
+                .populate('clase')
+                .populate({
+                    path: 'vistas.usuario',
+                    select: 'nombre'
+                });
+            res.status(200).json(foros);
+        } catch (error) {
+            console.error('Error al obtener los foros del profesor:', error);
+            res.status(500).json({ message: 'Error al obtener los foros del profesor', error: error.message });
         }
+    }
 
 
 
