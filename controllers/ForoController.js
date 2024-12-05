@@ -54,34 +54,34 @@ class ForoController extends BaseController {
     }
 
         
-    // Método para obtener los foros de un profesor y agregar el nombre de los estudiantes que han visto cada foro
-    async obtenerForosPorProfesor(req, res) {
-        const { profesorId } = req.params;
-
-        try {
-            const foros = await Foro.find({ profesor: profesorId })
-                .populate('clase')
-                .populate({
-                    path: 'vistas.usuario',
-                    select: 'nombre'
-                });
-
-            // Modificar la estructura de la respuesta para solo incluir el nombre de los estudiantes
-            const forosConNombres = foros.map(foro => ({
-                ...foro.toObject(),
-                vistas: foro.vistas.map(vista => ({
-                    nombre: vista.usuario.nombre,
-                    fecha: vista.fecha
-                }))
-            }));
-
-            res.status(200).json(forosConNombres);
-        } catch (error) {
-            console.error('Error al obtener los foros del profesor:', error);
-            res.status(500).json({ message: 'Error al obtener los foros del profesor', error: error.message });
+        // Método para obtener los foros de un profesor y agregar el nombre de los estudiantes que han visto cada foro
+        async obtenerForosPorProfesor(req, res) {
+            const { profesorId } = req.params;
+    
+            try {
+                const foros = await Foro.find({ profesor: profesorId })
+                    .populate('clase')
+                    .populate({
+                        path: 'vistas.usuario',
+                        select: 'nombre'
+                    });
+    
+                // Modificar la estructura de la respuesta para incluir el nombre de los estudiantes y mantener el ID de las vistas
+                const forosConNombres = foros.map(foro => ({
+                    ...foro.toObject(),
+                    vistas: foro.vistas.map(vista => ({
+                        _id: vista._id,
+                        usuario: vista.usuario.nombre,
+                        fecha: vista.fecha
+                    }))
+                }));
+    
+                res.status(200).json(forosConNombres);
+            } catch (error) {
+                console.error('Error al obtener los foros del profesor:', error);
+                res.status(500).json({ message: 'Error al obtener los foros del profesor', error: error.message });
+            }
         }
-    }
-
 
 
 }
